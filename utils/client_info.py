@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+
+import pymem
+import pymem.process
+import time
+from utils.offsets import dwLocalPlayer
+
+# get the process csgo
+try:
+    csgo = pymem.Pymem("csgo.exe")
+# if we can't find the process, exit
+except pymem.exception.ProcessNotFound:
+    # print error message
+    print(">>> CSGO not found.")
+    exit()
+
+def find(name):
+    # find memory location of specified DLL files, 
+    # this allows us to figure out the offsets of loaded in objects like players
+    return pymem.process.module_from_name(csgo.process_handle, name).lpBaseOfDll
+
+def get_player():
+    try:
+        return csgo.read_int(client + dwLocalPlayer)
+    except:
+        # if we can't find the player we are probably not in a game.
+        print(">>> Error reading local player.")
+        # sleep for 5 seconds to allow time for the user to launch and stop terminal spam.
+        time.sleep(5)
+        return
+
+
+client = find("client.dll")
+engine = find("engine.dll")
