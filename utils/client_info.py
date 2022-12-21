@@ -3,7 +3,7 @@
 import pymem
 import pymem.process
 import time
-from utils.offsets import dwLocalPlayer
+import utils.offsets as offsets
 
 # get the process csgo
 try:
@@ -21,10 +21,21 @@ def find(name):
 
 def get_player():
     try:
-        return csgo.read_int(client + dwLocalPlayer)
+        return csgo.read_int(client + offsets.dwLocalPlayer)
     except:
         # if we can't find the player we are probably not in a game.
         print(">>> Error reading local player.")
+        # sleep for 5 seconds to allow time for the user to launch and stop terminal spam.
+        time.sleep(5)
+        return
+
+def get_player_team():
+    try:
+        player = get_player()
+        return csgo.read_int(player + offsets.m_iTeamNum)
+    except:
+        # if we can't find the player we are probably not in a game.
+        print(">>> Error reading local player team.")
         # sleep for 5 seconds to allow time for the user to launch and stop terminal spam.
         time.sleep(5)
         return

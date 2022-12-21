@@ -17,8 +17,17 @@ dwGlowObjectManager = 0x535A9D8
 dwEntityList = 0x4DFFF14
 dwForceJump = 0x52BBC9C
 dwLocalPlayer = 0xDEA964
+dwForceAttack = 0x322DD10
 
 m_iTeamNum = 0xF4
 m_iGlowIndex = 0x10488
 m_fFlags = 0x104
 m_flFlashMaxAlpha = 0x1046C
+m_iCrosshairId = 0x11838
+
+enemy_glow = {
+    'red': 1.0,
+    'green': 0.0,
+    'blue': 0.0, 
+    'opacity': 2.0,
+}

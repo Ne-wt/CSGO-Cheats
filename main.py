@@ -12,6 +12,8 @@ print('>>> Initialising Packages...')
 
 from packages.bhop import bhop
 from packages.no_flash import no_flash
+from packages.trigger import trigger
+from packages.glow import glow
 
 # ------------------------------ main ------------------------------ #
 
@@ -26,7 +28,7 @@ def main():
 
     while True:
         # basic exit script
-        if keyboard.is_pressed('del'):
+        if keyboard.is_pressed('del') or keyboard.is_pressed('esc'):
             exit()
 
         # most scripts check if we're in game anyway 
@@ -34,13 +36,17 @@ def main():
         if GetWindowText(GetForegroundWindow()) not in game_names:
             continue
 
+        # stuff that runs every loop
         no_flash()
 
-        # right now this loop is not fast enough(?) to
-        # effectively bhop using the script, perhaps need to
-        # rewrite the key check
+        glow()
+
+        # stuff that runs when a key is pressed
         if keyboard.is_pressed('space'):
             bhop()
+
+        if keyboard.is_pressed('shift'):
+            trigger()
 
 if __name__ == '__main__':
     main()
